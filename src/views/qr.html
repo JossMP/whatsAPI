@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <section class="body-font h-screen bg-gray-100 pt-10 text-gray-600">
+        <div class="container mx-auto mt-10 flex max-w-3xl flex-wrap justify-center rounded-lg bg-white px-5 py-24">
+            <!-- QR Code Number Account & Uploadfile -->
+            <div class="flex-wrap md:flex">
+                <div class="mx-auto">
+                    <div class="content-center mx-auto mt-12 h-64 w-64 rounded-lg border p-2 md:mt-0 text-center"
+                        id="qr">
+                        CARGANDO...
+                    </div>
+                    <button
+                        class="mt-2 mx-auto block rounded-md border bg-blue-500 hover:bg-blue-700 px-4 py-1 text-white outline-none"
+                        onclick="window.location.reload()">
+                        <span class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-4 h-4 mr-2">
+                                <path fill-rule="evenodd"
+                                    d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+
+                            Actualizar</span>
+                    </button>
+                </div>
+                <!-- Step Checkout -->
+                <div class="mt-8 max-w-sm md:mt-0 md:ml-10 md:w-2/3">
+                    <div class="relative flex pb-12">
+                        <div class="absolute inset-0 flex h-full w-10 items-center justify-center">
+                            <div class="pointer-events-none h-full w-1 bg-gray-200"></div>
+                        </div>
+                        <div
+                            class="relative z-10 inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-blue-500 text-white">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" class="h-5 w-5" viewBox="0 0 24 24">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-grow pl-4">
+                            <h2 class="title-font mb-1 text-sm font-medium tracking-wider text-gray-900">STEP 1</h2>
+                            <p class="font-laonoto leading-relaxed">
+                                escanea el codigo QR en WhatsApp para iniciar sesion.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="relative flex pb-12">
+                        <div class="absolute inset-0 flex h-full w-10 items-center justify-center">
+                            <div class="pointer-events-none h-full w-1 bg-gray-200"></div>
+                        </div>
+                        <div
+                            class="relative z-10 inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-blue-500 text-white">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" class="h-5 w-5" viewBox="0 0 24 24">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-grow pl-4">
+                            <h2 class="title-font mb-1 text-sm font-medium tracking-wider text-gray-900">STEP 2</h2>
+                            <p class="font-laonoto leading-relaxed">
+                                Registr el nuevo dispositivo en WhatsApp.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="relative flex pb-12">
+                        <div
+                            class="relative z-10 inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-blue-500 text-white">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" class="h-5 w-5" viewBox="0 0 24 24">
+                                <circle cx="12" cy="5" r="3"></circle>
+                                <path d="M12 22V8M5 12H2a10 10 0 0020 0h-3"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-grow pl-4">
+                            <h2 class="title-font mb-1 text-sm font-medium tracking-wider text-gray-900">STEP 3</h2>
+                            <p class="font-laonoto leading-relaxed">
+                                Usa el API para enviar mensajes.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        //const url = '/qr';
+        async function getQR() {
+            try {
+                const response = await fetch('/qr-json', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const imagenContainer = document.getElementById('qr');
+                    imagenContainer.innerHTML = data.qr;
+                }
+                else {
+                    const imagenContainer = document.getElementById('qr');
+                    imagenContainer.innerHTML = "Cargando...";
+                    window.location.reload();
+                }
+            } catch (error) {
+                //const imagenContainer = document.getElementById('qr');
+                //imagenContainer.innerHTML = "Error";
+                window.location.reload();
+            }
+        }
+        getQR();
+        setInterval(getQR, 10000);
+    </script>
+</body>
+
+</html>
