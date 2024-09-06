@@ -4,6 +4,8 @@ import express from "express"
 import WsWapi from './repositorio/WsWapi'
 import path from 'path'
 
+import * as emoji from 'node-emoji'
+
 const app = express()
 const port = process.env.PORT || 3001
 
@@ -23,12 +25,14 @@ app.post('/send', async (req, res) => {
     if (message == undefined) return res.json({ success: false, message: "MESSAGE_UNDEFINED" });
     if (phone == undefined) return res.json({ success: false, message: "PHONE_UNDEFINED" });
 
+    const parsedMessage = emoji.emojify(message);
+
     if (typeof (mime) == "undefined" || typeof (data) == "undefined") {
-        const response = await whatsapp.sendMsg({ message, phone })
+        const response = await whatsapp.sendMsg({ message: parsedMessage, phone })
         res.json(response);
     }
     else {
-        const response = await whatsapp.sendMediaMsg({ message, phone, mime, data, filename })
+        const response = await whatsapp.sendMediaMsg({ message: parsedMessage, phone, mime, data, filename })
         res.json(response);
     }
 })
