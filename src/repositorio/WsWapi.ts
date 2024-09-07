@@ -21,7 +21,7 @@ class WsWapi extends Client implements IWapi {
         });
 
         this.on("authenticated", () => {
-            this.status = true;
+            // this.status = true;
             console.log("LOGIN SUCCESS...");
         });
 
@@ -31,28 +31,15 @@ class WsWapi extends Client implements IWapi {
         });
 
         this.on("qr", (qr) => {
+            this.status = false;
             console.log('QR GENERATED...');
             this.generateImage(qr);
-            this.status = false;
         });
 
         this.on("ready", () => {
             this.status = true;
             console.log("READY...");
         });
-
-        // this.on("auth_failure", () => {
-        //     this.status = false;
-        //     console.log("LOGIN FAIL...");
-        // });
-
-        // this.on("qr", (qr) => {
-        //     console.log('QR GENERATED...');
-        //     this.generateImage(qr);
-        //     // qrcode.generate(qr, { small: true }, function (qrcode?: any) {
-        //     // console.log(qrcode)
-        //     // });
-        // });
 
         console.log("Iniciando....");
         this.initialize();
