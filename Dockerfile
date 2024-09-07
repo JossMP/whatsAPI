@@ -6,7 +6,11 @@ RUN apt-get update && apt-get install -y gconf-service libgbm-dev libasound2 lib
 WORKDIR /app
 
 # Copy your application files into the container
-COPY . .
+COPY ./src ./src
+COPY ./package.json ./package.json
+COPY ./package-lock.json ./package-lock.json
+COPY ./tsconfig.json ./tsconfig.json
+COPY ./tmp ./tmp
 
 # Install your Node.js application dependencies
 RUN npm install

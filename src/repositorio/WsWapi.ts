@@ -20,34 +20,26 @@ class WsWapi extends Client implements IWapi {
             }
         });
 
-        try {
-            this.on("authenticated", () => {
-                this.status = true;
-                console.log("LOGIN SUCCESS...");
-            });
+        this.on("authenticated", () => {
+            this.status = true;
+            console.log("LOGIN SUCCESS...");
+        });
 
-            this.on("auth_failure", () => {
-                this.status = false;
-                console.log("LOGIN FAIL...");
-            });
+        this.on("auth_failure", () => {
+            this.status = false;
+            console.log("LOGIN FAIL...");
+        });
 
-            this.on("qr", (qr) => {
-                console.log('QR GENERATED...');
-                this.generateImage(qr);
-                this.status = false;
-            });
-        } catch (e: any) {
-            console.log(e);
-        }
+        this.on("qr", (qr) => {
+            console.log('QR GENERATED...');
+            this.generateImage(qr);
+            this.status = false;
+        });
 
-        // try {
-        //     this.on("ready", () => {
-        //         //this.status = true;
-        //         console.log("READY...");
-        //     });
-        // } catch (e: any) {
-        //     console.log("ready...: " + e);
-        // }
+        this.on("ready", () => {
+            this.status = true;
+            console.log("READY...");
+        });
 
         // this.on("auth_failure", () => {
         //     this.status = false;
@@ -92,10 +84,10 @@ class WsWapi extends Client implements IWapi {
     }
 
     private generateImage = (base64: string) => {
+        console.log(`QR actualizo...`); 
         const path = 'tmp'; //`${process.cwd()}/tmp`;
         let qr_svg = imageQr(base64, { type: "svg", margin: 4 });
         qr_svg.pipe(require("fs").createWriteStream(`${path}/qr.svg`));
-        console.log(`El codigo QR se actualiza cada minuto`);
     };
 
     async getQR(): Promise<any> {
