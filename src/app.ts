@@ -8,7 +8,7 @@ import * as emoji from 'node-emoji'
 
 const app = express()
 const port = process.env.PORT || 3001
-const token = process.env.TOKEN || "RANDOM-TOKEN";
+const token = process.env.TOKEN || "RANDOM-TOKEN"
 
 const whatsapp = new WsWapi();
 

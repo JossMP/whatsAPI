@@ -20,23 +20,48 @@ class WsWapi extends Client implements IWapi {
             }
         });
 
-        this.on("ready", () => {
-            this.status = true;
-            console.log("LOGIN SUCCESS...");
-        });
+        try {
+            this.on("authenticated", () => {
+                this.status = true;
+                console.log("LOGIN SUCCESS...");
+            });
 
-        this.on("auth_failure", () => {
-            this.status = false;
-            console.log("LOGIN FAIL...");
-        });
+            this.on("auth_failure", () => {
+                this.status = false;
+                console.log("LOGIN FAIL...");
+            });
 
-        this.on("qr", (qr) => {
-            console.log('Escanea el codigo QR:')
-            this.generateImage(qr);
-            // qrcode.generate(qr, { small: true }, function (qrcode?: any) {
-            // console.log(qrcode)
-            // });
-        });
+            this.on("qr", (qr) => {
+                console.log('QR GENERATED...');
+                this.generateImage(qr);
+                this.status = false;
+            });
+        } catch (e: any) {
+            console.log(e);
+        }
+
+        // try {
+        //     this.on("ready", () => {
+        //         //this.status = true;
+        //         console.log("LOGIN SUCCESS...");
+        //     });
+        // } catch (e: any) {
+        //     console.log("ready...: " + e);
+        // }
+
+        // this.on("auth_failure", () => {
+        //     this.status = false;
+        //     console.log("LOGIN FAIL...");
+        // });
+
+        // this.on("qr", (qr) => {
+        //     console.log('QR GENERATED...');
+        //     this.generateImage(qr);
+        //     // qrcode.generate(qr, { small: true }, function (qrcode?: any) {
+        //     // console.log(qrcode)
+        //     // });
+        // });
+
         console.log("Iniciando....");
         this.initialize();
     }
