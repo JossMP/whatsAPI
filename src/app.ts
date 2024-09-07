@@ -20,6 +20,10 @@ app.use(express.static(path.join(__dirname, 'views')));
 
 app.post('/send', async (req, res) => {
 
+    const authorization = req.headers['authorization'];
+    if (authorization !== token) return res.json({ success: false, message: "UNAUTHORIZED" });
+
+
     const { message, phone, mime, data, filename } = req.body;
 
     if (!whatsapp.getStatus) return res.json({ success: false, message: "WAIT_LOGIN" });

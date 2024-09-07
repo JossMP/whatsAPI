@@ -43,7 +43,7 @@ class WsWapi extends Client implements IWapi {
         // try {
         //     this.on("ready", () => {
         //         //this.status = true;
-        //         console.log("LOGIN SUCCESS...");
+        //         console.log("READY...");
         //     });
         // } catch (e: any) {
         //     console.log("ready...: " + e);
